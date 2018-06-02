@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品仓库</title>
+    <link rel="shortcut icon" href="img/logo1.png"/>
+    <script src="js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="css/shop/needMaincss.css">
+    <script src="js/shop/needmainjs.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="css/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/Font-Awesome-master/css/font-awesome.css">
+    <script src="js/JsMode.js"></script>
+    <script src="js/pace.js"></script>
+    <link href="css/pace2.css" rel="stylesheet">
+    <style>
+        h1{
+            font-size: 20px;
+            margin-left:10px;
+        }
+        .All_article_wrap{
+            height: 1250px;
+            background: #f4f6fb;
+        }
+        .All_article{
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .All_article_left{
+            margin-top:50px;
+            width: 240px;
+            height: 300px;
+            float: left;
+        }
+        .All_article_left ul{
+            width: 240px;
+            height: 300px;
+        }
+        .All_article_left ul li{
+            text-indent: 1em;
+            line-height:55px;
+            width: 100%;
+            height: 55px;
+        }
+        .All_article_left ul li a{
+            color: #404045;
+            font-size: 15px;
+        }
+        .All_article_left ul li a:hover{
+            text-decoration: none;
+            color: #00c0c9;
+        }
+        .All_article_left ul li span{
+            display: inline-block;
+            margin-right:5px;
+            width: 10px;
+            height: 13px;
+            background: linear-gradient(#00f6ff, #009aa3);
+        }
+        .All_article_right{
+            margin-top:50px;
+            width: 900px;
+            height: 1160px;
+            float: left;
+            background: white;
+            position: relative;
+        }
+        .All_article_main{
+            width: 900px;
+            height: 1110px;
+            background: white;
+            display: flex;
+            flex-flow: row wrap;
+            padding: 20px;
+        }
+         .All_article_main div{
+             font-family:楷体;
+             width: 280px;
+             height: 530px;
+             background: linear-gradient(#aeeeff, #00d4dd);
+             margin-left:5px;
+             text-align: center;
+             padding: 15px;
+             border-radius: 10px;
+             box-shadow: 2px 2px 2px #aeeeff;
+             transition: all 0.3s;
+             position: relative;
+         }
+        .All_article_main div:hover{
+            box-shadow: 5px 2px 3px #aeeeff;
+        }
+        .All_article_main div img{
+            width: 200px;
+            height: 200px;
+            background: pink;
+            border-radius: 5px;
+        }
+        .All_article_main div h2{
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .All_article_main div span:before{
+            content: "￥";
+        }
+        .All_article_main div p:nth-of-type(1){
+             width: 250px;
+             height: 150px;
+             background: linear-gradient(#aeeeff,white);
+             overflow: auto;
+             text-indent: 2em;
+             text-align: left;
+             margin: 0;
+            position: absolute;
+            bottom: 80px;
+             border-radius: 10px;
+         }
+        .All_article_main div p:nth-of-type(2):before{
+            content: "卖家ID：";
+        }
+        .All_article_main div p:nth-of-type(2){
+            margin: 5px;
+            position: absolute;
+            left: 95px;
+            bottom: 50px;
+        }
+         .All_article_main div span{
+             color: #fd4a4c;
+             position: absolute;
+             top: 260px;
+             left: 120px;
+         }
+        .All_article_main div a{
+            bottom: 10px;
+            left: 70px;
+            position: absolute;
+            display: inline-block;
+            border-radius: 10px;
+            width: 150px;
+            line-height:40px;
+            font-size: 18px;
+            color: white;
+            height: 40px;
+            background: linear-gradient(#00eff8, #00828b);
+        }
+        .All_article_main div a:hover{
+            text-decoration: none;
+            background: linear-gradient(#00f6ff, #009aa3);
+        }
+        .All_article_right_foot{
+            position: absolute;
+            margin-left:350px;
+            bottom: 0px;
+        }
+        #find{
+            transition: all 0.3s;
+        }
+        #find:hover{
+            text-decoration: none;
+            color: white;
+            background: #00a1b5;
+        }
+        header{
+            height: 222px!important;
+        }
+    </style>
+</head>
+<body>
+<div class="right">
+    <div class="rightcenter">
+        <div class="r1">
+            <i class="fa fa-television" aria-hidden="true" style="left: 10px"></i>
+            <section class="r1d1">
+                Soulmate
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 20px;">
+            <i class="fa fa-microphone" aria-hidden="true" style="left: 15px"></i>
+            <section class="r1d1">
+                留言
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 40px;">
+            <i class="fa fa-book" aria-hidden="true" style="left: 13px"></i>
+            <section class="r1d1">
+                我的书架
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 60px;">
+            <i class="fa fa-table" aria-hidden="true" style="left: 14px"></i>
+            <section class="r1d1">
+                消费情况
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 80px;">
+            <i class="fa fa-commenting-o" aria-hidden="true" style="left: 14px"></i>
+            <section class="r1d1">
+                我的消息
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 100px;">
+            <a href="myshop.html"><i class="fa fa-shopping-cart" aria-hidden="true" style="left: 14px"></i></a>
+            <section class="r1d1">
+                购物车
+            </section>
+            <section class="r1d2">
+                ▶
+            </section>
+        </div>
+    </div>
+    <div class="rightfoot">
+        <div class="r1" style="top: 0px;">
+            <i class="fa fa-book" aria-hidden="true" style="left: 13px"></i>
+            <section class="r1d1" style="line-height: 36px">
+                用户手册
+            </section>
+            <section class="r1d2" style="top: 6px">
+                ▶
+            </section>
+        </div>
+        <div class="r1" style="top: 20px;">
+            <a href="myshop.html"><i class="fa fa-user-o" aria-hidden="true" style="left: 14px"></i></a>
+            <section class="r1d1" style="line-height: 36px">
+                个人信息
+            </section>
+            <section class="r1d2" style="top: 6px">
+                ▶
+            </section>
+        </div>
+        <div class="r1 fei" id="fei" style="top: 40px;display: none">
+            <i class="fa fa-paper-plane" aria-hidden="true" style="left: 14px;"></i>
+            <section class="r1d1" style="line-height: 36px">
+                返回顶部
+            </section>
+            <section class="r1d2" style="top: 6px">
+                ▶
+            </section>
+        </div>
+    </div>
+</div>
+<main>
+    <header>
+        <div class="header_header">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">跳蚤市场<span class="addressadd"> 商品大厦</span></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="main.html">首页<!--<span class="sr-only">(current)</span>--></a></li>
+                            <li><a href="shoplist.html">商品大厦</a></li>
+                            <li class="active"><a href="javascript:;">商品仓库</a></li>
+                            <li class="dropdown">
+                                <a href="myshop.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我的跳蚤 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="myshop.html">个人信息</a></li>
+                                    <li><a href="myshop.html">待处理消息</a></li>
+                                    <li><a href="myshop.html">待处理订单</a></li>
+                                    <li><a href="myshop.html">♥ 我的购物车 ♥</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="输入关键字查询">
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <img src="img/userImg/toux.jpg" alt="" style="position: absolute; width: 40px;height: 40px;top:5px; left: -40px;border-radius: 50%">
+                                <script>
+                                    if(getCookie("userImg")!="")
+                                        $(".dropdown>img").attr("src",getCookie("userImg"));
+                                </script>
+                                <a  href="#" class="dropdown-toggle usershowname" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  User<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="index.html" class="usernameif">登陆</a></li>
+                                    <li><a href="index.html" id="endname">注销</a></li>
+                                    <script>
+                                        $("#endname").click(
+                                            function () {
+                                                if(confirm("您确定要注销么？(注销后将失去浏览记录！)")){
+                                                    removeCookie("showName");
+                                                    removeCookie("userImg");
+                                                    removeCookie("userName");
+                                                    window.location.href="/";
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            }
+                                        )
+                                    </script>
+                                    <li><a href="index.html">切换账号</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="javascript:;">关于我们</a></li>
+                            <li><a href="javascript:;"></a></li>
+                            <script>
+                                //                    $("fp-nav")
+                            </script>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="header_article_wrap">
+            <div class="header_article">
+                <img src="img/shop/tiaozhaolog.png" alt="">
+                <p>商品 | 服务商 | 二手</p>
+                <input type="text" id="findText">
+                <a href="javascript:;" id="find"> <i class="fa fa-address-card-o fa-2x" aria-hidden="true"></i> 搜商品</a>
+                <div>app下载<img src="img/shop/weichat.jpg" alt=""></div>
+                <div>微信公众号<img src="img/shop/weichat.jpg" alt=""></div>
+            </div>
+        </div>
+        <div class="header_footer">
+            <a href="shoplist.html">商城分类</a>
+            <a href="shopall.html">新品首发 &nbsp;&nbsp;&nbsp;|</a>
+            <a href="shopall.html">奢侈大牌  &nbsp;&nbsp;&nbsp;|</a>
+            <a href="shopall.html">智能生活  &nbsp;&nbsp;&nbsp;|</a>
+            <a href="shopall.html">毕业清理</a>
+            <a href="shopall.html">直接发布</a>
+        </div>
+    </header>
+    <div class="All_article_wrap" >
+        <div class="All_article">
+           <div class="All_article_left">
+               <h1>P R I C E ：</h1>
+               <ul>
+                   <li><span></span> <a href="javascript:;" style="color:#00c0c9;">ALL</a></li>
+                   <li><span></span> <a href="javascript:;">0.00-100.00</a></li>
+                   <li><span></span> <a href="javascript:;">100.00-500.00</a></li>
+                   <li><span></span> <a href="javascript:;">500.00-1000.00</a></li>
+                   <li><span></span> <a href="javascript:;">1000.00-2000.00</a></li>
+               </ul>
+           </div>
+            <div class="All_article_right">
+                 <div class="All_article_main">
+                     <!--<div>-->
+                         <!--<img src="img/commoditys/cool5.jpg" alt="">-->
+                         <!--<h2>商品名称</h2><span>价格</span>-->
+                         <!--<p>商品简介</p>-->
+                         <!--<p>卖家</p>-->
+                         <!--<a href="javascript:;">加入购物车</a>-->
+                     <!--</div>-->
+                 </div>
+                <div class="All_article_right_foot">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li><a href="javascript:;">1</a></li>
+                            <li><a href="javascript:;">2</a></li>
+                            <li><a href="javascript:;">3</a></li>
+                            <li><a href="javascript:;">4</a></li>
+                            <li><a href="javascript:;">5</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer_main">
+           <div class="footer_main_left">
+               <img src="img/shop/tiaozhaolog.png" alt="">
+               <p>
+                   分享
+                   <i class="fa fa-qq" aria-hidden="true"></i>
+                   <i class="fa fa-list-alt" aria-hidden="true"></i>
+                   <i class="fa fa-weixin" aria-hidden="true"></i>
+                   <i class="fa fa-weibo" aria-hidden="true"></i>
+               </p>
+               <p>客户服务QQ： 4009287979，2773398623</p>
+               <p>全国咨询热线（Hotline）：400-164-7979</p>
+               <p>地址（Address）：福建省三明市三元区三明学院</p>
+               <p>邮编（Zip Code）：215000</p>
+           </div>
+           <div class="footer_main_right">
+               <ul>
+                   <li>
+                       <h2>新手上路</h2>
+                       <p><a href="javascript:;">注册会员</a></p>
+                       <p><a href="">客户入门指南</a></p>
+                       <p><a href="javascript:;">'跳跳'老板入门</a></p>
+                       <p><a href="javascript:;">服务商入门</a></p>
+                   </li>
+                   <li>
+                       <h2>'跳跳'老板手册</h2>
+                       <p><a href="javascript:;">发布商品</a></p>
+                       <p><a href="javascript:;">查看发布商品事项</a></p>
+                       <p><a href="javascript:;">加急发布</a></p>
+                       <p><a href="javascript:;">发布置顶</a></p>
+                       <p><a href="javascript:;">其他发布问题</a></p>
+                   </li>
+                   <li>
+                       <h2>客户手册</h2>
+                       <p><a href="javascript:;">商品大厅模块介绍</a></p>
+                       <p><a href="javascript:;">实名认证</a></p>
+                       <p><a href="javascript:;">班级认证</a></p>
+                       <p><a href="javascript:;">查看参与需求</a></p>
+                       <p><a href="javascript:;">会员等级以及服务</a></p>
+                   </li>
+                   <li>
+                       <h2>安全保障</h2>
+                       <p><a href="javascript:;">安全交易流程</a></p>
+                       <p><a href="javascript:;">申请维护</a></p>
+                       <p><a href="javascript:;">冻结账号</a></p>
+                   </li>
+               </ul>
+           </div>
+        </div>
+    </footer>
+    <script>
+        var allData=null;
+        var indexLi=0;
+         $.post('../app/getShop',function (data) {
+             allData=JSON.parse(data);
+             showShop(0);
+         });
+         $(".pagination li a").click(function () {
+             indexLi=$(this).html();
+             $(".All_article_main").empty();
+             showShop(indexLi-1);
+         });
+        function showShop(indexLi) {
+            for(var i=indexLi*6;i<(indexLi*6+6)&&i<allData.length;i++){
+                $(".All_article_main").append("<div>" +
+                        "<img src="+allData[i].shopimg+">" +
+                        "<h2 data-num='"+allData[i].shopid+"'>"+allData[i].shopname+"</h2>" +
+                        "<span>"+allData[i].shopprice+"</span>" +
+                        "<p>"+allData[i].shopmessage+"</p>" +
+                        "<p>"+allData[i].masterid+"</p>" +
+                        "<a href='javascript:;'>加入购物车</a>" +
+                        "</div>");
+            }
+            //购物车功能！
+            $(".All_article_main a").click(function () {
+                var userName=getCookie("userName");
+                if(userName!=""){
+                    if(confirm("看上了它嘛？点击确定加入购物车！")){
+                        var buyNameId=$(this).parent().find("h2").data("num");
+                        $.post('../app/buyShop',{shopId:buyNameId},function (data) {
+                            if(data){
+                                alert("已经放入购物车！");
+                            }
+                        })
+                    }
+                    else{}
+                }
+                else{
+                    if(confirm("登陆以后才能购买哦！")){ window.location.href="/";}
+                    else{ window.location.href="/";}
+                }
+            });
+        }
+    </script>
+    <script>
+        $("#find").click(function () {
+            if($("#findText").val()!=""){
+               $.post("../app/findShop",{name:$("#findText").val()},function (data) {
+                   if(data){
+                       data=JSON.parse(data);
+                       console.log(data);
+                       $(".All_article_main").empty();
+                       for(var i=0;i<data.length;i++){
+                           $(".All_article_main").append("<div>" +
+                               "<img src="+data[i].shopimg+">" +
+                               "<h2>"+data[i].shopname+"</h2>" +
+                               "<span>"+data[i].shopprice+"</span>" +
+                               "<p>"+data[i].shopmessage+"</p>" +
+                               "<p>"+data[i].masterid+"</p>" +
+                               "<a href='javascript:;'>加入购物车</a>" +
+                               "</div>");
+                       }
+                       //购物车功能！
+                       $(".All_article_main a").click(function () {
+                           var userName=getCookie("userName");
+                           if(userName!=""){
+                               if(confirm("看上了它嘛？点击确定加入购物车！")){
+                                   var buyNameId=$(this).parent().find("h2").data("num");
+                                   $.post('../app/buyShop',{shopId:buyNameId},function (data) {
+                                       if(data){
+                                           alert("已经放入购物车！");
+                                       }
+                                   })
+                               }
+                               else{}
+                           }
+                           else{
+                               if(confirm("登陆以后才能购买哦！")){ window.location.href="/index.html";}
+                               else{ window.location.href="/index.html";}
+                           }
+                       });
+                   }else{
+                       console.log("未找到");
+                   }
+
+               })
+            }
+            else{
+                $("#findText").css("border","1px solid #ff3854");
+                $("#findText").attr("placeholder","请输入要搜索的内容")
+            }
+        });
+        $("#findText").focus(function () {
+            $("#findText").css("border","1px solid #00959E");
+        })
+        $("#findText").change(function () {
+            if($("#findText").val()==""){
+                $(".All_article_main").empty();
+                showShop(0);
+            }
+        })
+    </script>
+</main>
+</body>
+</html>
+

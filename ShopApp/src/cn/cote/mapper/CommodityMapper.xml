@@ -90,6 +90,9 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+    <if test="startRow != null and endRow !=null">
+      limit #{startRow},#{endRow}
+    </if>
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.cote.pojo.CommodityExample" >
     select
@@ -103,6 +106,9 @@
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
+    </if>
+    <if test="startRow != null and endRow !=null">
+        limit #{startRow},#{endRow}
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >

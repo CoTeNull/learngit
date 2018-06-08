@@ -10,6 +10,27 @@ public class CommodityExample {
 
     protected List<Criteria> oredCriteria;
 
+
+    protected int startRow;
+
+    protected int endRow;
+
+    public int getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
+    }
+
+    public int getEndRow() {
+        return endRow;
+    }
+
+    public void setEndRow(int endRow) {
+        this.endRow = endRow;
+    }
+
     public CommodityExample() {
         oredCriteria = new ArrayList<Criteria>();
     }

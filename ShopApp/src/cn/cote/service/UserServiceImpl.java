@@ -13,9 +13,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findUserMessage(User this_user) {
-      User user=userMapper.selectByNameAndPass(this_user);
-      user.setUserPassword("******");
-      return user;
+      UserExample example = new UserExample();
+      UserExample.Criteria criteria =example.createCriteria();
+      criteria.andUserNameEqualTo(this_user.getUserName()).andUserPasswordEqualTo(this_user.getUserPassword());
+      List<User> user=userMapper.selectByExample(example);
+      if(user.size()!=0){
+          return user.get(0);
+      }else{
+          return null;
+      }
     }
 
     @Override

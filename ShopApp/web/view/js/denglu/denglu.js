@@ -76,6 +76,7 @@ $(function () {
             else{
                 //访问路由
                 $.post('/Shop/user/login',data,function(data){
+                    console.log(data);
                     if(data.code==1){
                         console.log(data);
                         idimg=data.data.userImg;

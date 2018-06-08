@@ -11,21 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("user")
+@ResponseBody
 public class UserController {
     @Autowired
     UserService userService;
-
     /**
      * 登陆
      * @param request
@@ -33,7 +29,6 @@ public class UserController {
      * @return 前端数据数组
      */
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    @ResponseBody
     public WebData login(HttpServletRequest request,HttpSession session){
      //获取用户数据，放入User模型中
      User this_user =new User();
@@ -41,11 +36,11 @@ public class UserController {
      this_user.setUserPassword(request.getParameter("userPassword"));
      //引用工具类返回前端
      this_user=userService.findUserMessage(this_user);
-    //------------手动日志-------------
-     System.out.println("登陆:找到的User为："+this_user);
-    //------------手动日志-------------
      WebData data =new WebData();
      if(this_user!=null){
+         //------------手动日志-------------
+         System.out.println("登陆:找到的User为："+this_user);
+         //------------手动日志-------------
          data.setCode(1);
          data.setMessage("FindIt");
          data.setData(this_user);
@@ -62,7 +57,6 @@ public class UserController {
      * @return 前端数据数组
      */
     @RequestMapping(value = "register",method = RequestMethod.POST)
-    @ResponseBody
     public WebData register(HttpServletRequest request,HttpSession session){
         User this_user =new User();
         this_user.setUserName(request.getParameter("userName"));
@@ -89,7 +83,6 @@ public class UserController {
         }
         return data;
     }
-
     /**
      * 修改昵称信息
      * @param request
@@ -97,7 +90,6 @@ public class UserController {
      * @return 前端数据数组
      */
     @RequestMapping(value = "registerNc",method = RequestMethod.POST)
-    @ResponseBody
     public WebData registerNc(HttpServletRequest request,HttpSession session){
     String this_userNc =request.getParameter("userNc");
     //从当前的Session中获取当前用户的userId
@@ -108,7 +100,6 @@ public class UserController {
     data.setMessage("修改成功");
     return data;
     }
-
     /**
      *修改用户头像
      * @param file
@@ -116,7 +107,6 @@ public class UserController {
      * @throws IOException
      */
     @RequestMapping(value = "registerImg",method = RequestMethod.POST)
-    @ResponseBody
     public WebData registerImg(MultipartFile file,HttpSession session) throws IOException {
         WebData data = new WebData();
         if (!file.isEmpty()) {

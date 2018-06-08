@@ -18,4 +18,5 @@
 
 	<!--前台业务-->
 	<bean class="cn.cote.service.UserServiceImpl"></bean>
+	<bean class="cn.cote.service.ShopServiceImpl"></bean>
 </beans>

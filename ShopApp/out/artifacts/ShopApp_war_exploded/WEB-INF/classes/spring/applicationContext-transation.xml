@@ -42,4 +42,11 @@
 		<!--切点应用-->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="mypointcut"/>
 	</aop:config>
+
+	<aop:config>
+		<!--定义切点-->
+		<aop:pointcut id="mypointcut" expression="execution(* cn.cote.service.UserServiceImpl.*.*(..))"/>
+		<!--切点应用-->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="mypointcut"/>
+	</aop:config>
 </beans>

@@ -4,6 +4,16 @@ public class WebData {
     private int code;
     private String message;
     private Object data;
+    private int length;
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
     public WebData(){}
     public WebData(int code, String message, Object data) {
         this.code = code;

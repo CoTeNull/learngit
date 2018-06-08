@@ -1,7 +1,7 @@
 
 // var Data=null;
 var indexLi=1;
-function getShop(){$.get("/Shop/shop/getShop?pageId="+indexLi,function (data) {
+function getShop(){$.get("/Shop/shop/get ShopByPage?pageId="+indexLi,function (data) {
     console.log(data);
     // Data=data;
     showShop(data);

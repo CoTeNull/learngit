@@ -11,4 +11,6 @@ public interface ShopService {
      * @return
      */
     List<Commodity> getShopByPage(int pageId);
+
+    List<Commodity> getShop(int number);
 }

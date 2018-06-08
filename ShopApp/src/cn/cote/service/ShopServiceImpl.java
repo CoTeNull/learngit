@@ -22,4 +22,15 @@ public class ShopServiceImpl implements ShopService {
         List<Commodity> data=commodityMapper.selectByExampleWithBLOBs(example);
         return data;
     }
+
+    @Override
+    public List<Commodity> getShop(int number) {
+        CommodityExample example = new CommodityExample();
+//      根据id倒序排列
+        example.setOrderByClause("commodity_id DESC");
+        example.setStartRow(0);
+        example.setEndRow(10);
+        List<Commodity> data=commodityMapper.selectByExampleWithBLOBs(example);
+        return data;
+    }
 }

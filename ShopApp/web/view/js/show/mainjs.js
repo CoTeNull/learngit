@@ -115,89 +115,103 @@ $(function(){
 
 
     /*After lunbo*/   //前提引入，声明变量---------------------------
-    var shopMessage=null;
-    $.post('../app/getShop',function (data) {
-        shopMessage=JSON.parse(data);
-    });
-    var shoptimer=setInterval(function () {
-        if(shopMessage!=null){
-            clearInterval(shoptimer);
-            //引入
-            $.each(shopMessage,function (index,item) {
-                    $(".main ul").prepend("<li><div class='newblock'>" +
-                        "<img src=" + item.shopimg + ">" +
-                        "<h6 data-num='" + item.shopid + "' >" + item.shopname + "</h6>" +
-                        "<p>" + item.shopmessage + "</p>" +
-                        "<a  href='javascript:;'>加入购物车</a>" +
-                        "</div></li>");
-                if(index==5)return false;
-            });
+    $.get('/Shop/shop/getShop?number=10',function (data) {
+        console.log(data);
+        $.each(data.data,function (index,item) {
+            $(".main ul").prepend("<li><div class='newblock'>" +
+                "<img src=" + item.commodityImg + ">" +
+                "<h6 data-num='" + item.commodityId + "' >" + item.commodityName + "</h6>" +
+                "<p>" + item.commodityMessage + "</p>" +
+                "<a  href='javascript:;'>加入购物车</a>" +
+                "</div></li>");
+            if(index==5)return false;
+        });
 
-            $(".main ul a").click(function () {
-                var userName=getCookie("userName");
-                if(userName!=""){
-                    if(confirm("看上了它嘛？点击确定加入购物车！")){
-                        var buyName=$(this).parent().find("h6").data("num");
-                        $.post('../app/buyShop',{shopId:buyName},function (data) {
-                            if(data){
-                                alert("已经放入购物车！");
-                            }
-                        })
-                    }
-                    else{}
+        $(".main ul a").click(function () {
+            var userName=getCookie("userName");
+            if(userName!=""){
+                if(confirm("看上了它嘛？点击确定加入购物车！")){
+                    var buyName=$(this).parent().find("h6").data("num");
+                    $.post('../app/buyShop',{shopId:buyName},function (data) {
+                        if(data){
+                            alert("已经放入购物车！");
+                        }
+                    })
                 }
-                 else{
-                    if(confirm("登陆以后才能购买哦！")){ window.location.href="/";}
-                    else{ window.location.href="/";}
-                }
-            });
-            //开始轮播
-            var oLi=$(".main ul li"); //获取要轮播的所有li标签
-            var oUl=$(".main ul");    //获取整个Ul(移动的时候也是设置UL的left属性，来控制轮播图移动的，
-            //两个按钮                                  // 所以上面的css要将UL设置为绝对定位属性)
-            var bLeft=$(".main_left");
-            var bRight=$(".main_right");
-            //前期准备定义变量
-            oUl.append(oLi.clone());  //全部复制li然后添加进去，目的造成无限循环的错觉！ 具体效果可以将上面的css注释看下
-            oUl.css("width",oLi.length*oLi.outerWidth(true)*2); //设置UL 的宽度等于li全部加起来的宽度，这样才不会让li换行。
-            var nowIndex=1;   //定义值，目的让这个值++，然后下面的函数就可以移动对应的长度。
-            var ifRun=true;  //开关—默认为开 (防止事件的多次点击)
-            //按钮事件---------------------------------------
-            bRight.click(function () {
-                if(ifRun){     //如果开关是开着的
-                    nowIndex--;  //当前值加一
-                    linRun();  //然后执行函数
-                }
-            });
-            bLeft.click(function () {
-                if(ifRun){
-                    nowIndex++;
-                    linRun();
-                }
-            });
-            //轮播函数----------------------------------------
-            function linRun() {
-                ifRun=false;  //准备开始执行动画，开关关闭——此时连续点击按钮也不会触发事件。
-                if(nowIndex <= oLi.length+1 && nowIndex>=1){  //如果当前值没有超过li的个数，执行动画
-                    //动画模块——让ul整体像左移动li的宽度(边框和li的全部宽度)，当动画执行结束后，打开开关
-                    oUl.animate({left:-(nowIndex-1)*(oLi.outerWidth(true))+'px'},'slow','swing',function () {ifRun=true});
-                }
-                else if(nowIndex<1){  //当前值为1的时候还向做移动就会让当前值小于1，此时让ul整体位置移动到副本的位置,造成无限循环的错觉
-                    nowIndex=oLi.length;
-                    oUl.css("left",-oLi.length*(oLi.outerWidth(true)));
-                    oUl.animate({left:-(oLi.length-1)*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
-                else {  //当超过li的个数的时候，让li瞬间回去，然后执行动画，再让当前的值变为2。照成错觉
-                    nowIndex=2;
-                    oUl.css("left",0);
-                    oUl.animate({left:-1*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
+                else{}
             }
-            //自动轮播-----------------------------------------
-            var linRunTimer= setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
-                bLeft.click();
-            },4000);
-            //轮播结束
+            else{
+                if(confirm("登陆以后才能购买哦！")){ window.location.href="/";}
+                else{ window.location.href="/";}
+            }
+        });
+        //开始轮播
+        var oLi=$(".main ul li"); //获取要轮播的所有li标签
+        var oUl=$(".main ul");    //获取整个Ul(移动的时候也是设置UL的left属性，来控制轮播图移动的，
+        //两个按钮                                  // 所以上面的css要将UL设置为绝对定位属性)
+        var bLeft=$(".main_left");
+        var bRight=$(".main_right");
+        //前期准备定义变量
+        oUl.append(oLi.clone());  //全部复制li然后添加进去，目的造成无限循环的错觉！ 具体效果可以将上面的css注释看下
+        oUl.css("width",oLi.length*oLi.outerWidth(true)*2); //设置UL 的宽度等于li全部加起来的宽度，这样才不会让li换行。
+        var nowIndex=1;   //定义值，目的让这个值++，然后下面的函数就可以移动对应的长度。
+        var ifRun=true;  //开关—默认为开 (防止事件的多次点击)
+        //按钮事件---------------------------------------
+        bRight.click(function () {
+            if(ifRun){     //如果开关是开着的
+                nowIndex--;  //当前值加一
+                linRun();  //然后执行函数
+            }
+        });
+        bLeft.click(function () {
+            if(ifRun){
+                nowIndex++;
+                linRun();
+            }
+        });
+        //轮播函数----------------------------------------
+        function linRun() {
+            ifRun=false;  //准备开始执行动画，开关关闭——此时连续点击按钮也不会触发事件。
+            if(nowIndex <= oLi.length+1 && nowIndex>=1){  //如果当前值没有超过li的个数，执行动画
+                //动画模块——让ul整体像左移动li的宽度(边框和li的全部宽度)，当动画执行结束后，打开开关
+                oUl.animate({left:-(nowIndex-1)*(oLi.outerWidth(true))+'px'},'slow','swing',function () {ifRun=true});
+            }
+            else if(nowIndex<1){  //当前值为1的时候还向做移动就会让当前值小于1，此时让ul整体位置移动到副本的位置,造成无限循环的错觉
+                nowIndex=oLi.length;
+                oUl.css("left",-oLi.length*(oLi.outerWidth(true)));
+                oUl.animate({left:-(oLi.length-1)*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
+            else {  //当超过li的个数的时候，让li瞬间回去，然后执行动画，再让当前的值变为2。照成错觉
+                nowIndex=2;
+                oUl.css("left",0);
+                oUl.animate({left:-1*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
         }
-    },100);
+        //自动轮播-----------------------------------------
+        var linRunTimer = setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
+            bLeft.click();
+        },4000);
+        //轮播结束
+        /*-------3D-------*/
+        for (var i = 0; i < 2; i++) {
+            $(".sdWrap_after ul").prepend("<p>" + data.data[i].commodityMessage + "</p>")
+        }
+        for (var i = 0; i < 2; i++) {
+            $(".sdWrap_after ul").prepend("<li><img src=" + data.data[i].commodityImg + "></li>")
+        }
+        for (var i = 4; i < 6; i++) {
+            $(".sdWrap_right ul").prepend("<p>" + data.data[i].commodityMessage + "</p>")
+        }
+        for (var i = 4; i < 6; i++) {
+            $(".sdWrap_right ul").prepend("<li><img src=" + data.data[i].commodityImg + "></li>")
+        }
+        for (var i = 8; i < 10; i++) {
+            $(".sdWrap_left ul").append("<p>" + data.data[i].commodityMessage + "</p>")
+        }
+        for (var i = 8; i < 10; i++) {
+            $(".sdWrap_left ul").prepend("<li><img src=" + data.data[i].commodityImg + "></li>")
+        }
+
+    });
+
 
     // $(".main").hover(         //当鼠标移入的时候，关闭定时器，移出打开定时器。
     //     function () { clearInterval(linRunTimer); },
@@ -205,33 +219,6 @@ $(function(){
     //         linRunTimer= setInterval(function () {
     //             bLeft.click();
     //         },3000);});
-
-    /*-------3D-------*/
-    var shoptimer2=setInterval(function () {
-        if (shopMessage != null) {
-            clearInterval(shoptimer2);
-            for (var i = 0; i < 2; i++) {
-                $(".sdWrap_after ul").prepend("<p>" + shopMessage[i].shopmessage + "</p>")
-            }
-            for (var i = 0; i < 2; i++) {
-                $(".sdWrap_after ul").prepend("<li><img src=" + shopMessage[i].shopimg + "></li>")
-            }
-            for (var i = 4; i < 6; i++) {
-                $(".sdWrap_right ul").prepend("<p>" + shopMessage[i].shopmessage + "</p>")
-            }
-            for (var i = 4; i < 6; i++) {
-                $(".sdWrap_right ul").prepend("<li><img src=" + shopMessage[i].shopimg + "></li>")
-            }
-            for (var i = 8; i < 10; i++) {
-                $(".sdWrap_left ul").append("<p>" + shopMessage[i].shopmessage + "</p>")
-            }
-            for (var i = 8; i < 10; i++) {
-                $(".sdWrap_left ul").prepend("<li><img src=" + shopMessage[i].shopimg + "></li>")
-            }
-
-        }
-    },100);
-
 
     $(".sdWrap_after").click(function () {
         $(".sdWrap").removeClass("goright goleft");

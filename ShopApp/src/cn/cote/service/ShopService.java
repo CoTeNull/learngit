@@ -13,4 +13,8 @@ public interface ShopService {
     List<Commodity> getShopByPage(int pageId);
 
     List<Commodity> getShop(int number);
+
+    int insertCommodity(Commodity commodity);
+
+    int addCommodityImg(String newFileName, int this_id);
 }

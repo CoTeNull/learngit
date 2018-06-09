@@ -18,12 +18,13 @@ $(function () {
         $(".usernameif").unwrap();
         $(".usernameif").remove();
 //右边栏的信息
-    $.post('/Shop/shop/getShop',function (data) {
-        data = JSON.parse(data);
-        $.each(data,function (index,item) {
-            $(".list-group").append("<li class='list-group-item'><a href='javascript:;'data-id="+item.shopid+">"+item.shopname+"</a></li>");
-            if(index==8)return false;
-        });
+    $.get('/Shop/shop/getShop?number=8',function (data) {
+        console.log(data);
+        if(data.code==1){
+            $.each(data.data,function (index,item) {
+                $(".list-group").append("<li class='list-group-item'><a href='javascript:;'data-id="+item.commodityId+">"+item.commodityName+"</a></li>");
+            });
+        }
     });
 //选项卡事件
     $(".article_left_ul ul li").eq(0).css({background:"#333333",borderLeft:"6px solid #ff4a4c"});
@@ -151,18 +152,18 @@ $(function () {
         $.ajax({
             data:datae,
             type:'post',
-            url:'../app/shopimg',
+            url:'/Shop/shop/commodityImg',
             // 不缓存请求页面
             cache:false,
             // 不转换请求数据
             processData:false,
             // 不改变数据的类型
             contentType:false,
-            success:function(res){
-                if(res){
-                  console.log(res)
+            success:function(data){
+                if(data.code==1){
+                    console.log(data);
                 }else{
-                  alert("未上传成功");
+                    console.log("发生了小夜未知的错误 >_< ");
                 }
             }
         })
@@ -174,9 +175,10 @@ $(function () {
         var buNum=1;//暂时默认为1
         var buMassage=$("#bumassage").val();
         if(buName!=""&&buPrice!=""&&buNum!=""&&buMassage!=""){
-            var buData={name:buName,price:buPrice,num:buNum,message:buMassage};
-            $.post("../app/setShop",buData,function (data) {
-                if(data){
+            var buData={commodityName:buName,commodityPrives:buPrice,commodityMessage:buMassage};
+            $.post("/Shop/shop/sendShop",buData,function (data) {
+                console.log(data);
+                if(data.code>0){
                     $(".shop_img form input[type=submit]").click();
                     alert("发布成功");
                 }else{alert("发布失败")}
@@ -189,35 +191,35 @@ $(function () {
     })
 
     //我的购物车有关
-     $.post('../app/getBuyShop',function (data) {
-         data=JSON.parse(data);
-         if(data.length==0){
-             $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
-         }
-         else{
-             for(var i=0;i<data.length;i++){
-                 $(".mybuy").append("<div><img src="+data[i].shopimg+">" +
-                     "<p class='thbu' data-num='"+data[i].id+"'>"+data[i].shopname+"</p>" +
-                     "<p>"+data[i].masterid+"</p>" +
-                     "<a href='javascript:;'>我不要了</a></div>");
-             }
-             //添加删除事件
-             $(".mybuy a").click(function () {
-                     if(confirm("不喜欢的话就 Let it Go！")){
-                         var buyName=$(this).parent().find(".thbu").data("num");
-                         var nowDiv=$(this).parent();
-                         $.post('../app/removeMyShop',{shopId:buyName},function (data) {
-                             if(data){
-                                 nowDiv.remove();
-                                 if($(".mybuy").children().length==0){
-                                     $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
-                                 }
-                             }
-                         })
-                     }
-                     else{}
-             });
-         }
-     });
+    //  $.post('../app/getBuyShop',function (data) {
+    //      data=JSON.parse(data);
+    //      if(data.length==0){
+    //          $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
+    //      }
+    //      else{
+    //          for(var i=0;i<data.length;i++){
+    //              $(".mybuy").append("<div><img src="+data[i].shopimg+">" +
+    //                  "<p class='thbu' data-num='"+data[i].id+"'>"+data[i].shopname+"</p>" +
+    //                  "<p>"+data[i].masterid+"</p>" +
+    //                  "<a href='javascript:;'>我不要了</a></div>");
+    //          }
+    //          //添加删除事件
+    //          $(".mybuy a").click(function () {
+    //                  if(confirm("不喜欢的话就 Let it Go！")){
+    //                      var buyName=$(this).parent().find(".thbu").data("num");
+    //                      var nowDiv=$(this).parent();
+    //                      $.post('../app/removeMyShop',{shopId:buyName},function (data) {
+    //                          if(data){
+    //                              nowDiv.remove();
+    //                              if($(".mybuy").children().length==0){
+    //                                  $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
+    //                              }
+    //                          }
+    //                      })
+    //                  }
+    //                  else{}
+    //          });
+    //      }
+    //  });
 
 });

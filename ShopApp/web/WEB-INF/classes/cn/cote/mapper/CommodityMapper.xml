@@ -137,7 +137,7 @@
       #{commodityPrives,jdbcType=DOUBLE}, #{commodityMasterId,jdbcType=INTEGER}, #{commodityMessage,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.cote.pojo.Commodity" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="commodityId" parameterType="cn.cote.pojo.Commodity" >
     insert into commodity
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="commodityId != null" >

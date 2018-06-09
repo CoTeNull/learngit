@@ -61,4 +61,8 @@
         <welcome-file>default.htm</welcome-file>
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
+    <context-param>
+        <param-name>IMGPATH</param-name>
+        <param-value>D:\WebApp\IdeaApp\learngit\ShopApp\web\view\img\</param-value>
+    </context-param>
 </web-app>

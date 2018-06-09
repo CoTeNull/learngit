@@ -29,8 +29,25 @@ public class ShopServiceImpl implements ShopService {
 //      根据id倒序排列
         example.setOrderByClause("commodity_id DESC");
         example.setStartRow(0);
-        example.setEndRow(10);
+        example.setEndRow(number);
         List<Commodity> data=commodityMapper.selectByExampleWithBLOBs(example);
         return data;
+    }
+
+    @Override
+    public int insertCommodity(Commodity commodity) {
+//        int code=commodityMapper.insert(commodity);
+        commodityMapper.insertSelective(commodity);
+        int code = commodity.getCommodityId();
+        return code;
+    }
+
+    @Override
+    public int addCommodityImg(String newFileName, int this_id) {
+        Commodity this_shop;
+        this_shop = commodityMapper.selectByPrimaryKey(this_id);
+        this_shop.setCommodityImg("/img/commoditys/"+newFileName);
+        int code = commodityMapper.updateByPrimaryKey(this_shop);
+        return code;
     }
 }

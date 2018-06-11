@@ -64,5 +64,6 @@
     <context-param>
         <param-name>IMGPATH</param-name>
         <param-value>D:\WebApp\IdeaApp\learngit\ShopApp\web\view\img\</param-value>
+        <!--<param-value>D:\Web\JavaDemo\ShopApp\web\view\img\</param-value>-->
     </context-param>
 </web-app>

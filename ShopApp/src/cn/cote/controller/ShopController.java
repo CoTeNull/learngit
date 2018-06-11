@@ -89,9 +89,7 @@ public class ShopController {
      * @return
      * @throws IOException
      */
-
     @RequestMapping(value = "commodityImg",method = RequestMethod.POST)
-
     public WebData registerImg(MultipartFile file, HttpSession session,HttpServletRequest request) throws IOException {
         WebData data = new WebData();
         if (!file.isEmpty()) {

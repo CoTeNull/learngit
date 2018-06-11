@@ -25,11 +25,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUserById(int a) {
-        return userMapper.selectByPrimaryKey(a);
-    }
-
-    @Override
     public int insertUser(User this_user) {
         int code = 0;
 //      创建条件类

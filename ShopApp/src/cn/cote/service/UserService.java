@@ -8,9 +8,7 @@ public interface UserService {
      * @param this_user
      */
     User findUserMessage(User this_user);
-
-    User findUserById(int a);
-
+    
     /**
      * 新用户注册
      * @param this_user

@@ -107,11 +107,13 @@ public class UserController {
      * @throws IOException
      */
     @RequestMapping(value = "registerImg",method = RequestMethod.POST)
-    public WebData registerImg(MultipartFile file,HttpSession session) throws IOException {
+    public WebData registerImg(MultipartFile file,HttpSession session,HttpServletRequest request) throws IOException {
         WebData data = new WebData();
         if (!file.isEmpty()) {
             // 设置图片存放路径
-            String path = "D:\\Web\\JavaDemo\\ShopApp\\web\\view\\img\\userImg\\";
+//            String path = "D:\\Web\\JavaDemo\\ShopApp\\web\\view\\img\\userImg\\";
+//            String path = "D:\\WebApp\\IdeaApp\\learngit\\ShopApp\\web\\view\\img\\userImg\\";
+            String path = request.getSession().getServletContext().getInitParameter("IMGPATH") + "userImg\\";
             String originalFileName = file.getOriginalFilename();
             String type =originalFileName.substring(originalFileName.lastIndexOf("."));
             if(".GIF".equals(type.toUpperCase())||".PNG".equals(type.toUpperCase())||".JPG".equals(type.toUpperCase())){

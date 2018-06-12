@@ -208,13 +208,11 @@
       user_img = #{userImg,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <!--了解清楚逆向工程产生的方法作用，和使用情况-->
-  <!--逆向工程的方法（只有两个条件时搜素XXX）-->
   <!--有什么方法可以依次输出对象的属性-->
   <!--返回前端的数据处理 map-->
-  <!--返回前端的是自定义工具类，还是处理好的json-->
   <!--不能很好的区别，Service和Controller的作用-->
   <!--网页禁止重复响应相应-->
+  <!--逆向工程时漏掉了字段-->
   <select id="selectByNameAndPass" resultMap="BaseResultMap" resultType="cn.cote.pojo.User">
     SELECT * FROM USER WHERE user_name=#{userName,jdbcType=VARCHAR} AND user_password=#{userPassword,jdbcType=VARCHAR}
   </select>

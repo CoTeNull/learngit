@@ -348,11 +348,10 @@
                         </ul>
                     </div>
                     <script>
-                        $.post('../app/getShop',function (data) {
-                            data = JSON.parse(data);
-                            $.each(data, function (index, item) {
-                                $("#clotheM ul").prepend("<li><i>￥" + item.shopprice + "</i><a href='javascript:;' data-num='"+item.shopid+"'>" + item.shopname + "</a></li>");
-                             if(index==4)return false;//限制最大个数
+                        $.get('/Shop/shop/getShop?number=4',function (data) {
+                            console.log(data);
+                            $.each(data.data, function (index, item) {
+                                $("#clotheM ul").prepend("<li><i>￥" + item.commodityPrives + "</i><a href='javascript:;' data-num='"+item.commodityId+"'>" + item.commodityName + "</a></li>");
                             })
                         })
                     </script>
@@ -384,11 +383,10 @@
                         </ul>
                     </div>
                     <script>
-                        $.post('../app/getShop',function (data) {
-                            data = JSON.parse(data);
-                            $.each(data, function (index, item) {
-                                $("#phoneM ul").prepend("<li><i>￥"+item.shopprice+"</i><a href='javascript:;' data-num='"+item.shopid+"'>"+item.shopname+"</a></li>");
-                                if(index==4)return false;//限制最大个数
+                        $.get('/Shop/shop/getShop?number=4',function (data) {
+                            console.log(data);
+                            $.each(data.data, function (index, item) {
+                                $("#phoneM ul").prepend("<li><i>￥" + item.commodityPrives + "</i><a href='javascript:;' data-num='"+item.commodityId+"'>" + item.commodityName + "</a></li>");
                             })
 
                         })

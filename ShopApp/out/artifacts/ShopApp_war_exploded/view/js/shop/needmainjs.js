@@ -109,22 +109,18 @@ $(function () {
 
 
     /*底部轮播事件*/
-    var shopMessages=null;
-    $.post('../app/getShop',function (data) {
-        shopMessages=JSON.parse(data);
-    });
-    var shoptimerall=setInterval(function () {
-        if (shopMessages != null) {
-            clearInterval(shoptimerall);
-           $.each(shopMessages,function (index,item) {
-               $(".lastblock_main ul").append("<li>" +
-                   "<img src="+item.shopimg+"><div>" +
-                   "<p>商品名称:</p><p class='thbuy' data-num='"+item.shopid+"'>"+item.shopname+"</p><br>" +
-                   "<p>一口价:</p><p>"+item.shopprice+"</p><br>" +
-                   "<p>卖家:</p><p>"+item.masterid+"</p></div>" +
-                   "<p>"+item.shopmessage+"<a href='javascript:;'>加入购物车</a></p></li>");
-              if(index==5)return false;
-           });
+    $.get('/Shop/shop/getShopAndMaster?number=6',function (data) {
+        console.log(data);
+        if(data.code==1){
+            $.each(data.data,function (index,item) {
+                $(".lastblock_main ul").append("<li>" +
+                    "<img src="+item.commodityImg+"><div>" +
+                    "<p>商品名称:</p><p class='thbuy' data-num='"+item.commodityId+"'>"+item.commodityName+"</p><br>" +
+                    "<p>一口价:</p><p>"+item.commodityPrives+"</p><br>" +
+                    "<p>卖家:</p><p>"+item.userName+"</p></div>" +
+                    "<p>"+item.commodityMessage+"<a href='javascript:;'>加入购物车</a></p></li>");
+                if(index==5)return false;
+            });
             //----------Buy----------
             $(".lastblock_main ul a").click(function () {
                 var userName=getCookie("userName");
@@ -145,62 +141,62 @@ $(function () {
                 }
             });
 
-            var oLi=$(".lastblock_main ul li"); //获取要轮播的所有li标签
-            var oUl=$(".lastblock_main ul");    //获取整个Ul(移动的时候也是设置UL的left属性，来控制轮播图移动的，
-//两个按钮                                  // 所以上面的css要将UL设置为绝对定位属性)
-            var bLeft= $("#faleft").eq(0);
-            var bRight=$("#faright");
-//前期准备定义变量
-            oUl.append(oLi.clone());  //全部复制li然后添加进去，目的造成无限循环的错觉！ 具体效果可以将上面的css注释看下
-            oUl.css("width",oLi.length*oLi.outerWidth(true)*2); //设置UL 的宽度等于li全部加起来的宽度，这样才不会让li换行。
-            var nowIndex=1;   //定义值，目的让这个值++，然后下面的函数就可以移动对应的长度。
-            var ifRun=true;  //开关—默认为开 (防止事件的多次点击)
-//按钮事件---------------------------------------
-            bRight.click(function () {
-                if(ifRun){     //如果开关是开着的
-                    nowIndex++;  //当前值加一
-                    linRun();  //然后执行函数
-                }
-            });
-            bLeft.click(function () {
-                if(ifRun){
-                    nowIndex--;
-                    linRun();
-                }
-            });
-//轮播函数----------------------------------------
-            function linRun() {
-                ifRun=false;  //准备开始执行动画，开关关闭——此时连续点击按钮也不会触发事件。
-                if(nowIndex <= oLi.length+1 && nowIndex>=1){  //如果当前值没有超过li的个数，执行动画
-                    //动画模块——让ul整体像左移动li的宽度(边框和li的全部宽度)，当动画执行结束后，打开开关
-                    oUl.animate({left:-(nowIndex-1)*(oLi.outerWidth(true))+'px'},'slow','swing',function () {ifRun=true});
-                }
-                else if(nowIndex<1){  //当前值为1的时候还向做移动就会让当前值小于1，此时让ul整体位置移动到副本的位置,造成无限循环的错觉
-                    nowIndex=oLi.length;
-                    oUl.css("left",-oLi.length*(oLi.outerWidth(true)));
-                    oUl.animate({left:-(oLi.length-1)*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
-                else {  //当超过li的个数的时候，让li瞬间回去，然后执行动画，再让当前的值变为2。照成错觉
-                    nowIndex=2;
-                    oUl.css("left",0);
-                    oUl.animate({left:-1*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
-            }
-//自动轮播-----------------------------------------
-            var linRunTimer= setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
-                bRight.click();
-            },4000);
-            $(".lastblock_main").hover(
-                function () {
-                    clearInterval(linRunTimer);
-                },
-                function () {
-                    linRunTimer= setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
-                        bRight.click();
-                    },4000);
-                }
-            );
         }
-    },100);
 
+        var oLi=$(".lastblock_main ul li"); //获取要轮播的所有li标签
+        var oUl=$(".lastblock_main ul");    //获取整个Ul(移动的时候也是设置UL的left属性，来控制轮播图移动的，
+//两个按钮                                  // 所以上面的css要将UL设置为绝对定位属性)
+        var bLeft= $("#faleft").eq(0);
+        var bRight=$("#faright");
+//前期准备定义变量
+        oUl.append(oLi.clone());  //全部复制li然后添加进去，目的造成无限循环的错觉！ 具体效果可以将上面的css注释看下
+        oUl.css("width",oLi.length*oLi.outerWidth(true)*2); //设置UL 的宽度等于li全部加起来的宽度，这样才不会让li换行。
+        var nowIndex=1;   //定义值，目的让这个值++，然后下面的函数就可以移动对应的长度。
+        var ifRun=true;  //开关—默认为开 (防止事件的多次点击)
+//按钮事件---------------------------------------
+        bRight.click(function () {
+            if(ifRun){     //如果开关是开着的
+                nowIndex++;  //当前值加一
+                linRun();  //然后执行函数
+            }
+        });
+        bLeft.click(function () {
+            if(ifRun){
+                nowIndex--;
+                linRun();
+            }
+        });
+//轮播函数----------------------------------------
+        function linRun() {
+            ifRun=false;  //准备开始执行动画，开关关闭——此时连续点击按钮也不会触发事件。
+            if(nowIndex <= oLi.length+1 && nowIndex>=1){  //如果当前值没有超过li的个数，执行动画
+                //动画模块——让ul整体像左移动li的宽度(边框和li的全部宽度)，当动画执行结束后，打开开关
+                oUl.animate({left:-(nowIndex-1)*(oLi.outerWidth(true))+'px'},'slow','swing',function () {ifRun=true});
+            }
+            else if(nowIndex<1){  //当前值为1的时候还向做移动就会让当前值小于1，此时让ul整体位置移动到副本的位置,造成无限循环的错觉
+                nowIndex=oLi.length;
+                oUl.css("left",-oLi.length*(oLi.outerWidth(true)));
+                oUl.animate({left:-(oLi.length-1)*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
+            else {  //当超过li的个数的时候，让li瞬间回去，然后执行动画，再让当前的值变为2。照成错觉
+                nowIndex=2;
+                oUl.css("left",0);
+                oUl.animate({left:-1*oLi.outerWidth(true)+'px'},'slow','swing',function () {ifRun=true})}
+        }
+//自动轮播-----------------------------------------
+        var linRunTimer= setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
+            bRight.click();
+        },4000);
+        $(".lastblock_main").hover(
+            function () {
+                clearInterval(linRunTimer);
+            },
+            function () {
+                linRunTimer= setInterval(function () {  //设置定时器，每隔3秒默认点击一次向右按钮
+                    bRight.click();
+                },4000);
+            }
+        );
+    });
 //轮播结束
 
 });

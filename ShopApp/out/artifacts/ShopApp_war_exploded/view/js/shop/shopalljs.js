@@ -1,7 +1,7 @@
 
 // var Data=null;
 var indexLi=1;
-function getShop(){$.get("/Shop/shop/getShop?pageId="+indexLi,function (data) {
+function getShop(){$.get("/Shop/shop/getShopByPage?pageId="+indexLi,function (data) {
     console.log(data);
     // Data=data;
     showShop(data);
@@ -9,15 +9,13 @@ function getShop(){$.get("/Shop/shop/getShop?pageId="+indexLi,function (data) {
 getShop();
 $(".pagination li a").click(function () {
     indexLi=$(this).html();
-    console.log(indexLi);
     $(".All_article_main").empty();
     getShop();
 });
 function showShop(data) {
     if(data.length==0){
         $(".All_article_main_message").addClass("messageShow");
-        console.log("执行");
-    }else{$(".All_article_main_message").removeClass("messageShow"); console.log("执行2");}
+    }else{$(".All_article_main_message").removeClass("messageShow"); }
     for(var i=0;i<data.length && i<6;i++){
         $(".All_article_main").append("<div>" +
             "<img src="+data.data[i].commodityImg+">" +

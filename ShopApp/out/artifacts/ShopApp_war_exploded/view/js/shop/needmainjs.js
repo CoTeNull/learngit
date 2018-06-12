@@ -109,15 +109,15 @@ $(function () {
 
 
     /*底部轮播事件*/
-    $.get('/Shop/shop/getShop?number=6',function (data) {
+    $.get('/Shop/shop/getShopAndMaster?number=6',function (data) {
         console.log(data);
         if(data.code==1){
             $.each(data.data,function (index,item) {
                 $(".lastblock_main ul").append("<li>" +
                     "<img src="+item.commodityImg+"><div>" +
                     "<p>商品名称:</p><p class='thbuy' data-num='"+item.commodityId+"'>"+item.commodityName+"</p><br>" +
-                    "<p>一口价:</p><p>"+item.commodityPrice+"</p><br>" +
-                    "<p>卖家:</p><p>"+item.commodityMasterId+"</p></div>" +
+                    "<p>一口价:</p><p>"+item.commodityPrives+"</p><br>" +
+                    "<p>卖家:</p><p>"+item.userName+"</p></div>" +
                     "<p>"+item.commodityMessage+"<a href='javascript:;'>加入购物车</a></p></li>");
                 if(index==5)return false;
             });

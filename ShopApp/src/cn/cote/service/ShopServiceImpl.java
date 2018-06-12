@@ -1,8 +1,10 @@
 package cn.cote.service;
 
 import cn.cote.mapper.CommodityMapper;
+import cn.cote.mapper.MyCommodityMapper;
 import cn.cote.pojo.Commodity;
 import cn.cote.pojo.CommodityExample;
+import cn.cote.pojo.MyCommodity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -49,5 +51,13 @@ public class ShopServiceImpl implements ShopService {
         this_shop.setCommodityImg("/img/commoditys/"+newFileName);
         int code = commodityMapper.updateByPrimaryKey(this_shop);
         return code;
+    }
+
+    @Autowired
+    MyCommodityMapper myCommodityMapper;
+    @Override
+    public List<MyCommodity> getShopAndMaster(int number) {
+        List<MyCommodity> data=myCommodityMapper.selectCommodityAndMaster(0,number);
+        return data;
     }
 }

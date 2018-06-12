@@ -2,6 +2,7 @@ package cn.cote.controller;
 
 import cn.cote.myutils.WebData;
 import cn.cote.pojo.Commodity;
+import cn.cote.pojo.MyCommodity;
 import cn.cote.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class ShopController {
         return data;
     }
     /**
-     * 获取页数，数据量自定义
+     * 获取商品信息，数据量自定义
      * @param request
      * @return 前端数据数组
      */
@@ -52,6 +53,27 @@ public class ShopController {
         int number = Integer.parseInt(request.getParameter("number"));
         System.out.println("获取商品个数为："+number);
         List<Commodity> this_list=shopService.getShop(number);
+        WebData data= new WebData();
+        if(this_list.size()>0){
+            data.setCode(1);
+        }else{data.setCode(0);}
+        data.setLength(this_list.size());
+        data.setMessage("成功查找");
+        data.setData(this_list);
+        return data;
+    }
+
+    /**
+     *
+     * 获取商品信息和master信息，数据量自定义
+     * @param request
+     * @return 前端数据数组
+     */
+    @RequestMapping(value = "getShopAndMaster",method = RequestMethod.GET)
+    public WebData getShopAndMaster(HttpServletRequest request){
+        int number = Integer.parseInt(request.getParameter("number"));
+        System.out.println("获取商品个数为："+number);
+        List<MyCommodity> this_list=shopService.getShopAndMaster(number);
         WebData data= new WebData();
         if(this_list.size()>0){
             data.setCode(1);

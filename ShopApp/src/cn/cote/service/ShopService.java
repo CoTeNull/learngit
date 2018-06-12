@@ -1,6 +1,7 @@
 package cn.cote.service;
 
 import cn.cote.pojo.Commodity;
+import cn.cote.pojo.MyCommodity;
 
 import java.util.List;
 
@@ -30,4 +31,10 @@ public interface ShopService {
      * @return
      */
     int addCommodityImg(String newFileName, int this_id);
+    /**
+     * 查找并降序排列信息和master信息
+     * @param number
+     * @return
+     */
+    List<MyCommodity> getShopAndMaster(int number);
 }

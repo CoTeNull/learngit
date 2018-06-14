@@ -1,10 +1,10 @@
 package cn.cote.service;
 
 import cn.cote.mapper.CommodityMapper;
+import cn.cote.mapper.DealMapper;
 import cn.cote.mapper.MyCommodityMapper;
-import cn.cote.pojo.Commodity;
-import cn.cote.pojo.CommodityExample;
-import cn.cote.pojo.MyCommodity;
+import cn.cote.mapper.MyDealMapper;
+import cn.cote.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -59,5 +59,28 @@ public class ShopServiceImpl implements ShopService {
     public List<MyCommodity> getShopAndMaster(int number) {
         List<MyCommodity> data=myCommodityMapper.selectCommodityAndMaster(0,number);
         return data;
+    }
+    @Autowired
+    DealMapper dealMapper;
+    @Override
+    public int buyShop(Deal newDeal) {
+    int code=dealMapper.insert(newDeal);
+        return code;
+    }
+    @Autowired
+    MyDealMapper myDealMapper;
+    @Override
+    public List<Commodity> getBuyShop(int userId) {
+       List<Commodity> newList=myDealMapper.selectBuyShop(userId);
+        return newList;
+    }
+
+    @Override
+    public int deleteDeal(int commodityId) {
+        DealExample example =new DealExample();
+        DealExample.Criteria criteria=example.createCriteria();
+        criteria.andDealShopIdEqualTo(commodityId);
+       int code= dealMapper.deleteByExample(example);
+        return code;
     }
 }

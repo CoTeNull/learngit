@@ -191,35 +191,36 @@ $(function () {
     })
 
     //我的购物车有关
-    //  $.post('../app/getBuyShop',function (data) {
-    //      data=JSON.parse(data);
-    //      if(data.length==0){
-    //          $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
-    //      }
-    //      else{
-    //          for(var i=0;i<data.length;i++){
-    //              $(".mybuy").append("<div><img src="+data[i].shopimg+">" +
-    //                  "<p class='thbu' data-num='"+data[i].id+"'>"+data[i].shopname+"</p>" +
-    //                  "<p>"+data[i].masterid+"</p>" +
-    //                  "<a href='javascript:;'>我不要了</a></div>");
-    //          }
-    //          //添加删除事件
-    //          $(".mybuy a").click(function () {
-    //                  if(confirm("不喜欢的话就 Let it Go！")){
-    //                      var buyName=$(this).parent().find(".thbu").data("num");
-    //                      var nowDiv=$(this).parent();
-    //                      $.post('../app/removeMyShop',{shopId:buyName},function (data) {
-    //                          if(data){
-    //                              nowDiv.remove();
-    //                              if($(".mybuy").children().length==0){
-    //                                  $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
-    //                              }
-    //                          }
-    //                      })
-    //                  }
-    //                  else{}
-    //          });
-    //      }
-    //  });
+     $.post('/Shop/shop/getBuyShop',function (data) {
+         console.log(data);
+         if(data.length==0){
+             $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
+         }
+         else{
+             for(var i=0;i<data.length;i++){
+                 $(".mybuy").append("<div><img src="+data.data[i].commodityImg+">" +
+                     "<p class='thbu' data-num='"+data.data[i].commodityId+"'>"+data.data[i].commodityName+"</p>" +
+                     "<p>"+data.data[i].commodityMasterId+"</p>" +
+                     "<a href='javascript:;'>我不要了</a></div>");
+             }
+             //添加删除事件
+             $(".mybuy a").click(function () {
+                     if(confirm("不喜欢的话就 Let it Go！")){
+                         var buyName=$(this).parent().find(".thbu").data("num");
+                         var nowDiv=$(this).parent();
+                         $.post('/Shop/shop/deleteDeal',{commodityId:buyName},function (data) {
+                             console.log(data);
+                             if(data.code==1){
+                                 nowDiv.remove();
+                                 if($(".mybuy").children().length==0){
+                                     $(".mybuy").append("<p style='color: #838383'>您暂未购买任何物品哦</p>")
+                                 }
+                             }
+                         })
+                     }
+                     else{}
+             });
+         }
+     });
 
 });

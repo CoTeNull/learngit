@@ -56,14 +56,14 @@ $(function () {
     var londtimer=null;
 
 //--------------------------------------------------------------------------------
-//     var handlerEmbed = function (captchaObj) {
+    var handlerEmbed = function (captchaObj) {
         $("#denglu").click(function () {
            // //验证码————————————————————
-           //  var validate = captchaObj.getValidate();
-           //  if (!validate) {//如果未完成验证的方法
-           //      alert("验证失败");
-           //      return;
-           //  }
+            var validate = captchaObj.getValidate();
+            if (!validate) {//如果未完成验证的方法
+                alert("验证失败");
+                return;
+            }
            //  //验证码————————————————————
             //向服务器传入数据
             var data={"userName":$("#name").val(),"userPassword":$("#pass").val()};
@@ -107,37 +107,37 @@ $(function () {
             }
         });
         // // 将验证码加到id为captcha的元素里，同时会有三个input的值：geetest_challenge, geetest_validate, geetest_seccode
-        // captchaObj.appendTo("#nowlogin");
-        // captchaObj.onReady(function () {
-        //     $("#nowlogin").html("");
-        // });
+        captchaObj.appendTo("#nowlogin");
+        captchaObj.onReady(function () {
+            $("#nowlogin").html("");
+        });
         // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
-    // };
+    };
  //---------------------------------------------------------------------------------
     $("#lonin").click(function () {
         clearInterval(londtimer);
         window.location.href="main.html"
     });
 //yzm--------------------------------------------------
-//     $.ajax({
-//         // 获取id，challenge，success（是否启用failback）
-//         url: "./yzm/web/StartCaptchaServlet.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
-//         type: "get",
-//         dataType: "json",
-//         success: function (data) {
-//             // console.log(data);
-//             // 使用initGeetest接口
-//             // 参数1：配置参数
-//             // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
-//             initGeetest({
-//                 gt: data.gt,
-//                 challenge: data.challenge,
-//                 new_captcha: data.new_captcha,
-//                 product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-//                 offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-//                 // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
-//             }, handlerEmbed);
-//         }
-//     });
+    $.ajax({
+        // 获取id，challenge，success（是否启用failback）
+        url: "/Shop/gt/register1?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            // 使用initGeetest接口
+            // 参数1：配置参数
+            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                new_captcha: data.new_captcha,
+                product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+            }, handlerEmbed);
+        }
+    });
     //yzm--------------------------------------------------
 });

@@ -28,13 +28,13 @@ function showShop(data) {
     }
     //购物车功能！
     $(".All_article_main a").click(function () {
-        console.log("666");
         var userName=getCookie("userName");
         if(userName!=""){
             if(confirm("看上了它嘛？点击确定加入购物车！")){
                 var buyNameId=$(this).parent().find("h2").data("num");
-                $.post('../app/buyShop',{shopId:buyNameId},function (data) {
-                    if(data){
+                $.post('/Shop/shop/buyShop',{commodityId:buyNameId},function (data) {
+                    console.log(data);
+                    if(data.code==1){
                         alert("已经放入购物车！");
                     }
                 })
@@ -71,8 +71,9 @@ $("#find").click(function () {
                     if(userName!=""){
                         if(confirm("看上了它嘛？点击确定加入购物车！")){
                             var buyNameId=$(this).parent().find("h2").data("num");
-                            $.post('../app/buyShop',{shopId:buyNameId},function (data) {
-                                if(data){
+                            $.post('/Shop/shop/buyShop',{commodityId:buyNameId},function (data) {
+                                console.log(data);
+                                if(data.code==1){
                                     alert("已经放入购物车！");
                                 }
                             })

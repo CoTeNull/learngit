@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <h1>立刻开始吧</h1>
   </body>
 </html>

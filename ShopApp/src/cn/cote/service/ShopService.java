@@ -1,6 +1,7 @@
 package cn.cote.service;
 
 import cn.cote.pojo.Commodity;
+import cn.cote.pojo.Deal;
 import cn.cote.pojo.MyCommodity;
 
 import java.util.List;
@@ -37,4 +38,10 @@ public interface ShopService {
      * @return
      */
     List<MyCommodity> getShopAndMaster(int number);
+
+    int buyShop(Deal newDeal);
+
+    List<Commodity> getBuyShop(int userId);
+
+    int deleteDeal(int commodityId);
 }

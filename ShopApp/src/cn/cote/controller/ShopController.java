@@ -2,6 +2,7 @@ package cn.cote.controller;
 
 import cn.cote.myutils.WebData;
 import cn.cote.pojo.Commodity;
+import cn.cote.pojo.Deal;
 import cn.cote.pojo.MyCommodity;
 import cn.cote.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.SimpleFormatter;
 
 @Controller
 @RequestMapping("shop")
@@ -62,9 +66,7 @@ public class ShopController {
         data.setData(this_list);
         return data;
     }
-
     /**
-     *
      * 获取商品信息和master信息，数据量自定义
      * @param request
      * @return 前端数据数组
@@ -106,9 +108,9 @@ public class ShopController {
     return data;
     }
     /**
-     *修改用户头像
+     *修改商品图像
      * @param file
-     * @return
+     * @return 前端数据数组
      * @throws IOException
      */
     @RequestMapping(value = "commodityImg",method = RequestMethod.POST)
@@ -141,5 +143,74 @@ public class ShopController {
 
         return data;
     }
+    /**
+     * 购买商品，添加交易记录
+     * @param request
+     * @param session
+     * @return 前端数据数组
+     */
+    @RequestMapping(value = "buyShop",method = RequestMethod.POST)
+    public WebData buyShop(HttpServletRequest request,HttpSession session){
+        int shopId= Integer.parseInt(request.getParameter("commodityId"));
+        int userId= (int) session.getAttribute("userId");
+        Date date=new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        sdf.format(date);
+        Deal newDeal =new Deal();
+        newDeal.setDealShopId(shopId);
+        newDeal.setDealUserId(userId);
+        newDeal.setDealTime(date);
+        newDeal.setDealCode("yes");
+        int code;
+        code=shopService.buyShop(newDeal);
+        WebData data= new WebData();
+        data.setCode(code);
+        data.setMessage("Success");
+        return data;
+    }
 
+    /**
+     * 查找当前用户的交易记录
+     * @param session
+     * @return 前端数据数组
+     */
+    @RequestMapping(value = "getBuyShop",method = RequestMethod.POST)
+    public WebData getBuyShop(HttpSession session){
+        int userId=(int)session.getAttribute("userId");
+        List<Commodity> newList = shopService.getBuyShop(userId);
+        WebData data = new WebData();
+
+        if(newList.size()>0){
+            data.setCode(1);
+            data.setLength(newList.size());
+            data.setMessage("获取到数据");
+            data.setData(newList);
+        }else{
+            data.setCode(0);
+            data.setMessage("发生错误");
+        }
+        return data;
+    }
+
+    /**
+     * 删除用户交易记录
+     * @param request
+     * @param session
+     * @return 前端数据数组
+     */
+    @RequestMapping(value = "deleteDeal",method = RequestMethod.POST)
+    public WebData deleteDeal(HttpServletRequest request,HttpSession session){
+        int userId=(int)session.getAttribute("userId");
+        WebData data= new WebData();
+        if(userId>0){
+          int commodityId= Integer.parseInt(request.getParameter("commodityId"));
+          int code= shopService.deleteDeal(commodityId);
+          data.setCode(code);
+          data.setMessage("删除成功");
+        }else{
+          data.setCode(0);
+          data.setMessage("不存在用户进行操作");
+        }
+        return data;
+    }
 }

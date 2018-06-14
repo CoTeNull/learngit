@@ -52,7 +52,29 @@
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+<!--yzm-->
+    <servlet>
+        <servlet-name>StartCaptchaServlet1</servlet-name>
+        <!--<display-name>StartCaptchaServlet1</display-name>-->
+        <!--<description></description>-->
+        <servlet-class>cn.cote.yzm.StartCaptchaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerifyLoginServlet1</servlet-name>
+        <!--<display-name>VerifyLoginServlet1</display-name>-->
+        <!--<description></description>-->
+        <servlet-class>cn.cote.yzm.VerifyLoginServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>VerifyLoginServlet1</servlet-name>
+        <url-pattern>/gt/ajax-validate1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StartCaptchaServlet1</servlet-name>
+        <url-pattern>/gt/register1</url-pattern>
+    </servlet-mapping>
+<!--yzm-->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
@@ -63,7 +85,7 @@
     </welcome-file-list>
     <context-param>
         <param-name>IMGPATH</param-name>
-        <param-value>D:\WebApp\IdeaApp\learngit\ShopApp\web\view\img\</param-value>
-        <!--<param-value>D:\Web\JavaDemo\ShopApp\web\view\img\</param-value>-->
+        <!--<param-value>D:\WebApp\IdeaApp\learngit\ShopApp\web\view\img\</param-value>-->
+        <param-value>D:\Web\JavaDemo\ShopApp\web\view\img\</param-value>
     </context-param>
 </web-app>

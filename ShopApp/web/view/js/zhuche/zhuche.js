@@ -5,6 +5,7 @@ $(function () {
     //头部淡入轮播
     var headindeif=true;
     var headindex=1;
+    var headImgIf=0;
     $(".article_header_footer ul li").click(function () {
         if(headindeif){
             headindeif=false;
@@ -78,14 +79,14 @@ $(function () {
 
 
     //--------------------------------------------------------------------------------
-    // var handlerEmbed = function (captchaObj) {
+    var handlerEmbed = function (captchaObj) {
         $("#zhuche").click(function () {
 
-            // var validate = captchaObj.getValidate();
-            // if (!validate) {//如果未完成验证的方法
-            //     alert("验证失败");
-            //     return;
-            // }
+            var validate = captchaObj.getValidate();
+            if (!validate) {//如果未完成验证的方法
+                alert("验证失败");
+                return;
+            }
 
             if($("#name").val()!="" && $("#pass").val()!="" && $("#pass2").val()!=""){
                 //*//上传信息
@@ -111,33 +112,33 @@ $(function () {
             }
         });
         // 将验证码加到id为captcha的元素里，同时会有三个input的值：geetest_challenge, geetest_validate, geetest_seccode
-    //     captchaObj.appendTo("#nowlogin");
-    //     captchaObj.onReady(function () {
-    //         $("#nowlogin").html("");
-    //     });
-    //     // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
-    // };
+        captchaObj.appendTo("#nowlogin");
+        captchaObj.onReady(function () {
+            $("#nowlogin").html("");
+        });
+        // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
+    };
     //yzm--------------------------------------------------
-    // $.ajax({
-    //     // 获取id，challenge，success（是否启用failback）
-    //     url: "./yzm/web/StartCaptchaServlet.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
-    //     type: "get",
-    //     dataType: "json",
-    //     success: function (data) {
-    //         // console.log(data);
-    //         // 使用initGeetest接口
-    //         // 参数1：配置参数
-    //         // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
-    //         initGeetest({
-    //             gt: data.gt,
-    //             challenge: data.challenge,
-    //             new_captcha: data.new_captcha,
-    //             product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-    //             offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-    //             // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
-    //         }, handlerEmbed);
-    //     }
-    // });
+    $.ajax({
+        // 获取id，challenge，success（是否启用failback）
+        url: "/Shop/gt/register1?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            // 使用initGeetest接口
+            // 参数1：配置参数
+            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                new_captcha: data.new_captcha,
+                product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+            }, handlerEmbed);
+        }
+    });
     //yzm--------------------------------------------------
 
 
@@ -150,7 +151,9 @@ $(function () {
                     if(data.code==1){
                         setCookie("showName",$("#showname").val());
                         setCookie("userName",$("#name").val());
-                        $("#imgloup").click();
+                        if(headImgIf==1){
+                            $("#imgloup").click();
+                        }else {headImgIf==0;}
                         if(confirm("欢迎使用！点击确定进入展示大厅")){
                             window.location.href="main.html";
                         }
@@ -167,12 +170,14 @@ $(function () {
             }else {alert("昵称不能为空")}
         });
     /*-----------头像上传-----------*/
+
     //输入头像
     $("#touxt").click(function () {
         $("#toux").click();
     });
     $("#toux").change(function () {
         var file1=$('#toux')[0].files[0];
+        headImgIf=1;
         $("#touxt").attr("src",window.URL.createObjectURL(file1)); //获取上传图片的本地路径
     });
     $("#massage form").submit(function(e){

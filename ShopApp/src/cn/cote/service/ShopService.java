@@ -44,4 +44,6 @@ public interface ShopService {
     List<Commodity> getBuyShop(int userId);
 
     int deleteDeal(int commodityId);
+
+    List<Commodity> getShopByLike(String word);
 }

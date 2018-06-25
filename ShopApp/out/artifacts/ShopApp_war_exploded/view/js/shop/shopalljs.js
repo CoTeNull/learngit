@@ -50,18 +50,17 @@ function showShop(data) {
 
 $("#find").click(function () {
     if($("#findText").val()!=""){
-        $.post("../app/findShop",{name:$("#findText").val()},function (data) {
-            if(data){
-                data=JSON.parse(data);
+        $.post("/Shop/shop/findLike",{name:$("#findText").val()},function (data) {
+            if(data.code==1){
                 console.log(data);
                 $(".All_article_main").empty();
                 for(var i=0;i<data.length;i++){
                     $(".All_article_main").append("<div>" +
-                        "<img src="+data[i].shopimg+">" +
-                        "<h2>"+data[i].shopname+"</h2>" +
-                        "<span>"+data[i].shopprice+"</span>" +
-                        "<p>"+data[i].shopmessage+"</p>" +
-                        "<p>"+data[i].masterid+"</p>" +
+                        "<img src="+data.data[i].commodityImg+">" +
+                        "<h2>"+data.data[i].commodityName+"</h2>" +
+                        "<span>"+data.data[i].commodityPrives+"</span>" +
+                        "<p>"+data.data[i].commodityMessage+"</p>" +
+                        "<p>"+data.data[i].commodityMasterId+"</p>" +
                         "<a href='javascript:;'>加入购物车</a>" +
                         "</div>");
                 }

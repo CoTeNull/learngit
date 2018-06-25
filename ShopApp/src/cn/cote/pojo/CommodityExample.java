@@ -11,9 +11,9 @@ public class CommodityExample {
     protected List<Criteria> oredCriteria;
 
 
-    protected int startRow;
+    protected int startRow = -1;
 
-    protected int endRow;
+    protected int endRow = -1;
 
     public int getStartRow() {
         return startRow;

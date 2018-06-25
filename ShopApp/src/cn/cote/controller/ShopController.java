@@ -213,4 +213,27 @@ public class ShopController {
         }
         return data;
     }
+
+    /**
+     * 模糊查询
+     * @param request
+     * @return 前端数据数组
+     */
+    @RequestMapping(value = "findLike",method = RequestMethod.POST)
+    public WebData findLike(HttpServletRequest request){
+        String word = request.getParameter("name");
+        System.out.println("输入字符："+word);
+        List<Commodity> list = shopService.getShopByLike(word);
+        WebData data= new WebData();
+        data.setCode(1);
+        if(list.size()>0){
+            data.setLength(list.size());
+            data.setMessage("找到商品");
+            data.setData(list);
+        }else{
+            data.setLength(list.size());
+            data.setMessage("未找到有关商品");
+        }
+        return data;
+    }
 }

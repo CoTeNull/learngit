@@ -131,9 +131,10 @@ $(function(){
             var userName=getCookie("userName");
             if(userName!=""){
                 if(confirm("看上了它嘛？点击确定加入购物车！")){
-                    var buyName=$(this).parent().find("h6").data("num");
-                    $.post('../app/buyShop',{shopId:buyName},function (data) {
-                        if(data){
+                    var buyNameId=$(this).parent().find("h6").data("num");
+                    $.post('/Shop/shop/buyShop',{commodityId:buyNameId},function (data) {
+                        console.log(data);
+                        if(data.code==1){
                             alert("已经放入购物车！");
                         }
                     })

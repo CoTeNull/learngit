@@ -90,7 +90,7 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="startRow != null and endRow !=null">
+    <if test="startRow != -1">
       limit #{startRow},#{endRow}
     </if>
   </select>

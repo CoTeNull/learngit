@@ -83,4 +83,14 @@ public class ShopServiceImpl implements ShopService {
        int code= dealMapper.deleteByExample(example);
         return code;
     }
+
+    @Override
+    public List<Commodity> getShopByLike(String word) {
+        CommodityExample example = new CommodityExample();
+        CommodityExample.Criteria criteria = example.createCriteria();
+        criteria.andCommodityNameLike("%"+word+"%");
+        List<Commodity> list = commodityMapper.selectByExampleWithBLOBs(example);
+        System.out.println(list.size());
+        return list;
+    }
 }

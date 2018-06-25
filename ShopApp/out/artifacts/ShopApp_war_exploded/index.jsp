@@ -9,6 +9,9 @@
 <html>
   <head>
     <title>$Title$</title>
+    <script>
+      window.location.href="view/index.html"
+    </script>
   </head>
   <body>
   <h1>立刻开始吧</h1>
